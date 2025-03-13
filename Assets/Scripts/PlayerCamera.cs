@@ -6,16 +6,15 @@ public class PlayerCamera : MonoBehaviour
     public float xSen;
     public float ySen;
 
-    public Transform orientation;
-
     private float xRotation;
     private float yRotation;
     private void Start()
     {
-        player = FindObjectOfType<Player>();
+        player = FindFirstObjectByType<Player>();
     }
-    void Update()
+    void FixedUpdate()
     {
+        transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 0.45f, player.transform.position.z);
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * xSen;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * ySen;
 
@@ -26,6 +25,5 @@ public class PlayerCamera : MonoBehaviour
 
         player.gameObject.transform.rotation = Quaternion.Euler(0, yRotation, 0);
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 }
