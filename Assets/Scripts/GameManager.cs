@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
     private float timer;
     [SerializeField]
     private bool started = false;
+    public bool locked;
 
     public TextMeshProUGUI scoreTxt;
     public TextMeshProUGUI waveTimerTxt;
@@ -19,6 +21,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> enemies;
     public List<GameObject> LiveEnemies;
     private Coroutine m_coroutine = null;
+    private Player player;
+    public GameObject pauseScreen;
 
     public static Vector3 RandomPosInBox(Bounds bounds)
     {
@@ -31,10 +35,47 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        player = FindFirstObjectByType<Player>();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        locked = true;
+        StartGame();
+    }
+
+    public void StartGame()
+    {
+        StopAllCoroutines();
+        timer = 0;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        player.GetComponent<Player>().enabled = true;
+        player.cam.GetComponent<PlayerCamera>().enabled = true;
+        player.deathScreen.GetComponent<Canvas>().enabled = false;
+        player.isDead = false;
+        player.poisoned = false;
+        started = false;
+        player.health = 1000;
+        player.mana = 1000;
+        player.transform.position = new Vector3(0,1,0);
+        player.transform.rotation = Quaternion.Euler(0, 0, 0);
+        if(LiveEnemies != null)
+        {
+            foreach(GameObject obj in LiveEnemies)
+            {
+                if (obj.GetComponent<Enemy>() != null)
+                {
+                    obj.GetComponent<Enemy>().Die();
+                }
+                else
+                {
+                    obj.GetComponentInChildren<Enemy>().Die();
+                }
+            }
+        }
+        score = 0;
         currentWave = 1;
         StartWave(currentWave);
     }
-
     void Update()
     {
         scoreTxt.text = "Score: " + score.ToString("0");
@@ -89,5 +130,27 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(60f);
         currentWave++;
         StartWave(currentWave);
+    }
+
+    public void Pause()
+    {
+        if (locked)
+        {
+            Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            locked = false;
+            player.cam.GetComponent<PlayerCamera>().enabled = false;
+            pauseScreen.GetComponent<Canvas>().enabled = true;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            locked = true;
+            player.cam.GetComponent<PlayerCamera>().enabled = true;
+            pauseScreen.GetComponent<Canvas>().enabled = false;
+        }
     }
 }

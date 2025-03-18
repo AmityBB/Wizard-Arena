@@ -122,9 +122,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d4cca61119a3c4b95574d581d2658a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manaCost: 200
-  damage: 100
+  player: {fileID: 0}
+  manaCost: 300
+  damage: 425
   speed: 1000
+  element: 1
   IceField: {fileID: 1189534952894868041, guid: eee0ae74688efce449a8ec2d445a7d38, type: 3}
 --- !u!54 &154879925030480328
 Rigidbody:

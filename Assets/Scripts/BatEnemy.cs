@@ -8,15 +8,15 @@ public class BatEnemy : Enemy
     public override void Start()
     {
         base.Start();
-        maxhealth = health * 1.5f;
-        lifeSteal = damage / 8;
+        maxhealth = health * 2;
+        lifeSteal = damage * 0.25f;
     }
 
     public override void Update()
     {
         if(health <= 0)
         {
-            Destroy(transform.parent.gameObject);
+            Die();
         }
         if(health > maxhealth)
         {
@@ -25,6 +25,11 @@ public class BatEnemy : Enemy
         base.Update();
     }
 
+    public override void Die()
+    {
+        Destroy(transform.parent.gameObject);
+        base.Die();
+    }
     public override void AttackPlayer(Collider col)
     {
         base.AttackPlayer(col);

@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,7 @@ public class Enemy : MonoBehaviour
     public Material defaultTexture;
     public Material hurtTexture;
     private Coroutine attackCoroutine;
+    public GameObject lightning;
 
     public virtual void Start()
     {
@@ -43,11 +45,10 @@ public class Enemy : MonoBehaviour
         if (Vector3.Distance(navObject.transform.position, new Vector3(player.transform.position.x, navObject.transform.position.y, player.transform.position.z)) < sightRange)
         {
             navObject.transform.LookAt(new Vector3(player.transform.position.x, navObject.transform.position.y, player.transform.position.z));
-            if (Vector3.Distance(navObject.transform.position, player.transform.position) > range)
+            if (Vector3.Distance(navObject.transform.position, player.transform.position) > range-1)
             {
                 attacking = false;
                 ChasePlayer();
-                StopCoroutine(attackCoroutine);
                 hitPlayers.Clear();
             }
             else
@@ -60,11 +61,26 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
-        if(health <= 0)
+    }
+
+    public virtual void Chain()
+    {
+        foreach(GameObject enemy in gameManager.LiveEnemies)
         {
-            gameManager.AddScore(deathScore);
-            Destroy(gameObject);
+            if(Vector3.Distance(transform.position, enemy.transform.position) < 10 && enemy != gameObject)
+            {
+                GameObject clone = Instantiate(lightning, Vector3.zero, Quaternion.identity);
+                clone.GetComponent<LineRenderer>().SetPosition(0, transform.position);
+                clone.GetComponent<LineRenderer>().SetPosition(1, enemy.transform.position);
+                enemy.GetComponentInChildren<Enemy>().TakeDamage(lightning.GetComponent<ChainedLightning>().damage, 4);
+            }
         }
+    }
+
+    public virtual void Die()
+    {
+        gameManager.AddScore(deathScore);
+        Destroy(gameObject);
     }
     public virtual void ChasePlayer()
     {
@@ -88,30 +104,18 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Attacking()
     {
-        yield return new WaitForSeconds(1f);
         AttackPlayer(hitbox);
+        yield return new WaitForSeconds(1f);
         attackCoroutine = StartCoroutine(Attacking());
     }
-    public void TakeDamage(float dmg)
+    public virtual void TakeDamage(float dmg, int element)
     {
         health -= dmg;
         gameObject.GetComponent<Renderer>().material = hurtTexture;
         StartCoroutine(TextureSet());
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.layer == 8 && collision.gameObject.GetComponent<Spell>() != null)
-        { 
-            TakeDamage(collision.gameObject.GetComponent<Spell>().damage);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.layer == 8 && other.gameObject.GetComponent<Spell>() != null)
+        if (health <= 0)
         {
-            TakeDamage(other.gameObject.GetComponent<Spell>().damage);
+            Die();
         }
     }
     IEnumerator TextureSet()

@@ -18,6 +18,10 @@ public class IceShard : Spell
     {
         if (collision.gameObject.layer != 6)
         {
+            if(collision.gameObject.layer == 9)
+            {
+                collision.gameObject.GetComponent<Enemy>().TakeDamage(damage, 1);
+            }
             if (!fieldSpawned)
             {
                 Instantiate(IceField, new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity);

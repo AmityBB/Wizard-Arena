@@ -151,11 +151,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  manaCost: 600
-  damage: 250
+  manaCost: 700
+  damage: 75
   speed: 800
   explosion: {fileID: 7856304875679115383}
   FireField: {fileID: 1189534952894868041, guid: 4f473727b0b653947a714d6894a2afd4, type: 3}
+  fieldSpawned: 0
 --- !u!135 &7856304875679115383
 SphereCollider:
   m_ObjectHideFlags: 0

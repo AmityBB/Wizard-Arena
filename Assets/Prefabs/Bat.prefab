@@ -136,7 +136,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!114 &3968748614241689539
 MonoBehaviour:
@@ -150,11 +150,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c78eb0628e23f1c4e8af7ece34f172a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 400
+  health: 250
   speed: 6
   damage: 75
   sightRange: 500
-  range: 4.15
+  range: 5.15
   attacking: 0
   deathScore: 7
   player: {fileID: 0}
@@ -164,6 +164,7 @@ MonoBehaviour:
   navObject: {fileID: 7567016545263470528}
   defaultTexture: {fileID: 2100000, guid: 8bb43c0b829f60442b166e51dc5f1fb6, type: 2}
   hurtTexture: {fileID: 2100000, guid: 336830e505cbf344fb4c0dc9757d91a8, type: 2}
+  lightning: {fileID: 2674923463244058676, guid: f1f19ce47edf917499a1839962d1b209, type: 3}
   lifeSteal: 0
   maxhealth: 0
 --- !u!135 &8289331756809616364
@@ -185,7 +186,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2
+  m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7567016545263470528
 GameObject:

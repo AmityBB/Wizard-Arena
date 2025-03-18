@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCamera : MonoBehaviour
 {
@@ -8,12 +9,16 @@ public class PlayerCamera : MonoBehaviour
 
     private float xRotation;
     private float yRotation;
+
+    public Slider sensSlider;
     private void Start()
     {
         player = FindFirstObjectByType<Player>();
     }
     void FixedUpdate()
     {
+        xSen = sensSlider.value * 10;
+        ySen = sensSlider.value * 10;
         transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 0.45f, player.transform.position.z);
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * xSen;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * ySen;

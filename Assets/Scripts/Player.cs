@@ -10,11 +10,12 @@ public class Player : MonoBehaviour
     private Vector2 moveDir;
     public float speed;
     public float jumpForce;
-    private bool locked;
     public bool grounded;
     private bool regeningHP;
     private bool regeningMana;
     public bool poisoned;
+    public bool isDead;
+    private bool CastingActive;
     [SerializeField] int selectedSpell;
     public GameObject selectedSlot;
     public GameObject prevSlot;
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
     public float maxHealth;
     public float mana;
     public float maxMana;
+    [SerializeField] private float iFrames;
 
     [SerializeField]
     private float gravityScale;
@@ -40,14 +42,15 @@ public class Player : MonoBehaviour
     public Rigidbody rb;
     public Camera cam;
     public List<GameObject> spells;
+    private GameManager gameManager;
+    public GameObject deathScreen;
+
 
     private void Start()
     {
         cam = FindFirstObjectByType<Camera>();
         rb = GetComponent<Rigidbody>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        locked = true;
+        gameManager = FindFirstObjectByType<GameManager>();
     }
     public void MovePlayer(InputAction.CallbackContext context)
     {
@@ -85,24 +88,24 @@ public class Player : MonoBehaviour
 
     public void CastSpell(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if(context.performed && gameManager.locked && !isDead)
         {
             switch (selectedSpell)
             {
                 case 0:
-                    if (mana >= spells[0].GetComponent<Spell>().manaCost)
+                    if (mana >= spells[0].GetComponent<Spell>().manaCost && !CastingActive)
                     {
                        Instantiate(spells[0], cam.gameObject.transform.position +(cam.gameObject.transform.forward * 2), cam.gameObject.transform.rotation);
                     }
                 break;
                 case 1:
-                    if(mana >= spells[1].GetComponent<Spell>().manaCost)
+                    if(mana >= spells[1].GetComponent<Spell>().manaCost && !CastingActive)
                     {
                         Instantiate(spells[1], cam.gameObject.transform.position + (cam.gameObject.transform.forward * 2), cam.gameObject.transform.rotation);
                     }
                     break;
                 case 2:
-                    if(mana >= spells[2].GetComponent<Spell>().manaCost)
+                    if(mana >= spells[2].GetComponent<Spell>().manaCost && !CastingActive)
                     {
                         spells[2].GetComponent<WindSpell>().Cast();
                     }
@@ -111,14 +114,18 @@ public class Player : MonoBehaviour
                     Debug.Log("Rockspike");
                     break;
                 case 4:
-                    if (mana >= spells[3].GetComponent<Spell>().manaCost)
+                    if (mana >= spells[3].GetComponent<Spell>().manaCost && !CastingActive)
                     {
-
                         Instantiate(spells[3], Vector3.zero, Quaternion.identity);
                     }
                         break;
                 case 5:
-                    Debug.Log("Pebbles");
+                    if(mana >= spells[4].GetComponent<Spell>().manaCost && !CastingActive)
+                    {
+                        CastingActive = true;
+                        mana -= spells[4].GetComponent<Spell>().manaCost;
+                        StartCoroutine(PebbleSpell(20));
+                    }
                     break;
                 case 6:
                     Debug.Log("Zombiesummon");
@@ -129,7 +136,19 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        if(poisoned)
+        if(iFrames < 0)
+        {
+            iFrames = 0;
+        }
+        if(iFrames > 0)
+        {
+            iFrames--;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameManager.Pause();
+        }
+        if (poisoned)
         {
             healthBarColor.GetComponent<Image>().color = new Color(255, 0, 255, 255);
         }
@@ -168,23 +187,6 @@ public class Player : MonoBehaviour
         manaBar.GetComponent<Slider>().value = mana;
         healthTxt.text = "Health:" + health.ToString("0") +"/"+ maxHealth;
         manaTxt.text = "Mana:" + mana.ToString("0") + "/" + maxMana;
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (locked)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                locked = false;
-                cam.GetComponent<PlayerCamera>().enabled = false;
-            }
-            else if (!locked)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                locked = true;
-                cam.GetComponent<PlayerCamera>().enabled = true;
-            }
-        }
         if(health > maxHealth)
         {
             health = maxHealth;
@@ -204,10 +206,14 @@ public class Player : MonoBehaviour
             MRegen = StartCoroutine(ManaRegen());
             regeningMana = true;
         }
-        if(health < 0)
+        if(health <= 0)
         {
             health = 0;
             Die();
+        }
+        if(mana < 0)
+        {
+            mana = 0;
         }
     }
 
@@ -241,7 +247,11 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(float dmg)
     {
-        health -= dmg;
+        if (iFrames <= 0 || poisoned)
+        {
+            health -= dmg;
+            iFrames = 100;
+        }
     }
 
     private IEnumerator HealthRegen()
@@ -272,8 +282,30 @@ public class Player : MonoBehaviour
             MRegen = null;
         }
     }
-    private void Die()
+
+    private IEnumerator PebbleSpell(int count)
     {
-        Destroy(gameObject);
+        yield return new WaitForSeconds(0.1f);
+        Instantiate(spells[4], cam.gameObject.transform.position + (cam.gameObject.transform.forward * 2), cam.gameObject.transform.rotation);
+        count--;
+        if (count > 0)
+        {
+            StartCoroutine(PebbleSpell(count));
+        }
+        else
+        {
+            CastingActive = false;
+        }
+    }
+
+   
+    public void Die()
+    {
+        gameObject.GetComponent<Player>().enabled = false;
+        cam.GetComponent<PlayerCamera>().enabled = false;
+        deathScreen.GetComponent<Canvas>().enabled = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        isDead = true;
     }
 }

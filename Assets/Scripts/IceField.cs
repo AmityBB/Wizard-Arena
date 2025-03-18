@@ -7,6 +7,11 @@ public class IceField : MonoBehaviour
     public float slowdownMult;
     public List<GameObject> colliding;
     public float duration;
+    public enum Elements
+    {
+        Ice
+    }
+    public Elements element = Elements.Ice;
 
     private void Start()
     {

@@ -180,8 +180,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 1}
+  m_Size: {x: 2.5, y: 2.5, z: 2.5}
+  m_Center: {x: 0, y: 0.65, z: 1}
 --- !u!114 &7268915267055008892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,11 +194,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfbfd40c28e420b4a934d7a89a47fa3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 600
+  health: 300
   speed: 5
   damage: 100
   sightRange: 300
-  range: 2
+  range: 3.5
   attacking: 0
   deathScore: 5
   player: {fileID: 0}
@@ -208,5 +208,7 @@ MonoBehaviour:
   navObject: {fileID: 2844268491336953589}
   defaultTexture: {fileID: 2100000, guid: c447f271632486447809ae4c29d554e7, type: 2}
   hurtTexture: {fileID: 2100000, guid: 336830e505cbf344fb4c0dc9757d91a8, type: 2}
+  lightning: {fileID: 2674923463244058676, guid: f1f19ce47edf917499a1839962d1b209, type: 3}
   poisonDmg: 25
   poisontics: 3
+  m_poisoner: 0
