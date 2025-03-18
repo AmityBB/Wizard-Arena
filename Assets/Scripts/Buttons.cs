@@ -23,6 +23,9 @@ public class Buttons : MonoBehaviour
     }
     public void ToGame()
     {
+        Time.timeScale = 1;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         SceneManager.LoadScene(1);
     }
     public void RestartGame()
