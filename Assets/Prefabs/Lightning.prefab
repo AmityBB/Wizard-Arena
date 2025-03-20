@@ -154,6 +154,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   manaCost: 1000
-  damage: 500
+  damage: 350
   speed: 0
   element: 4

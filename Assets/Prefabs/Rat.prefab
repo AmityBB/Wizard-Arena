@@ -196,19 +196,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 300
   speed: 5
-  damage: 100
-  sightRange: 300
+  damage: 110
   range: 3.5
-  attacking: 0
   deathScore: 5
+  sightRange: 300
+  attacking: 0
   player: {fileID: 0}
   m_agent: {fileID: 0}
   hitbox: {fileID: 1010801508540139356}
   hitPlayers: []
   navObject: {fileID: 2844268491336953589}
+  lightning: {fileID: 2674923463244058676, guid: f1f19ce47edf917499a1839962d1b209, type: 3}
   defaultTexture: {fileID: 2100000, guid: c447f271632486447809ae4c29d554e7, type: 2}
   hurtTexture: {fileID: 2100000, guid: 336830e505cbf344fb4c0dc9757d91a8, type: 2}
-  lightning: {fileID: 2674923463244058676, guid: f1f19ce47edf917499a1839962d1b209, type: 3}
-  poisonDmg: 25
+  poisonDmg: 30
   poisontics: 3
   m_poisoner: 0

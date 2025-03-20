@@ -12,6 +12,7 @@ public class WindSpell : Spell
         StartCoroutine(SpellEnabledTime());
         if (player.grounded)
         {
+            player.mana -= 200;
             player.rb.AddForce(transform.up * windMult, ForceMode.Impulse);
         }
         else

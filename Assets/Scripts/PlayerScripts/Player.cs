@@ -105,25 +105,38 @@ public class Player : MonoBehaviour
                     }
                     break;
                 case 2:
-                    if(mana >= spells[2].GetComponent<Spell>().manaCost && !CastingActive)
+                    if (!grounded)
                     {
-                        spells[2].GetComponent<WindSpell>().Cast();
+                        if (mana >= spells[2].GetComponent<Spell>().manaCost && !CastingActive)
+                        {
+                            spells[2].GetComponent<WindSpell>().Cast();
+                        }
+                    }
+                    else
+                    {
+                        if (mana >= spells[2].GetComponent<Spell>().manaCost + 200 && !CastingActive)
+                        {
+                            spells[2].GetComponent<WindSpell>().Cast();
+                        }
                     }
                     break;
                 case 3:
-                    Debug.Log("Rockspike");
-                    break;
-                case 4:
                     if (mana >= spells[3].GetComponent<Spell>().manaCost && !CastingActive)
                     {
                         Instantiate(spells[3], Vector3.zero, Quaternion.identity);
                     }
-                        break;
+                    break;
+                case 4:
+                    if (mana >= spells[4].GetComponent<Spell>().manaCost && !CastingActive)
+                    {
+                        Instantiate(spells[4], Vector3.zero, Quaternion.identity);
+                    }
+                    break;
                 case 5:
-                    if(mana >= spells[4].GetComponent<Spell>().manaCost && !CastingActive)
+                    if(mana >= spells[5].GetComponent<Spell>().manaCost && !CastingActive)
                     {
                         CastingActive = true;
-                        mana -= spells[4].GetComponent<Spell>().manaCost;
+                        mana -= spells[5].GetComponent<Spell>().manaCost;
                         StartCoroutine(PebbleSpell(20));
                     }
                     break;
@@ -286,7 +299,7 @@ public class Player : MonoBehaviour
     private IEnumerator PebbleSpell(int count)
     {
         yield return new WaitForSeconds(0.1f);
-        Instantiate(spells[4], cam.gameObject.transform.position + (cam.gameObject.transform.forward * 2), cam.gameObject.transform.rotation);
+        Instantiate(spells[5], cam.gameObject.transform.position + (cam.gameObject.transform.forward * 2), cam.gameObject.transform.rotation);
         count--;
         if (count > 0)
         {
@@ -301,6 +314,7 @@ public class Player : MonoBehaviour
    
     public void Die()
     {
+        Time.timeScale = 0;
         gameObject.GetComponent<Player>().enabled = false;
         cam.GetComponent<PlayerCamera>().enabled = false;
         deathScreen.GetComponent<Canvas>().enabled = true;

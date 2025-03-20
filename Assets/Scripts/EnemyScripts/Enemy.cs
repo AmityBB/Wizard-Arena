@@ -10,21 +10,21 @@ public class Enemy : MonoBehaviour
     public float health;
     public float speed;
     public float damage;
-    [SerializeField] private float sightRange;
     public float range;
-    [SerializeField]private bool attacking = false;
     public float deathScore;
+    [SerializeField] private float sightRange;
+    [SerializeField]private bool attacking = false;
     
+    private GameManager gameManager;
     public Player player;
     public NavMeshAgent m_agent;
     [SerializeField] private Collider hitbox;
     public List<GameObject> hitPlayers;
-    private GameManager gameManager;
     public GameObject navObject;
+    public GameObject lightning;
     public Material defaultTexture;
     public Material hurtTexture;
     private Coroutine attackCoroutine;
-    public GameObject lightning;
 
     public virtual void Start()
     {
@@ -41,6 +41,11 @@ public class Enemy : MonoBehaviour
 
     public virtual void Update()
     {
+        if (transform.position.y < -1) 
+        {
+            deathScore = 0;
+            Die();
+        }
         m_agent.speed = speed;
         if (Vector3.Distance(navObject.transform.position, new Vector3(player.transform.position.x, navObject.transform.position.y, player.transform.position.z)) < sightRange)
         {

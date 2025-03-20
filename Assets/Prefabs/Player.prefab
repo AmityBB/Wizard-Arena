@@ -158,6 +158,7 @@ MonoBehaviour:
   jumpForce: 30
   grounded: 0
   poisoned: 0
+  isDead: 0
   selectedSpell: 0
   selectedSlot: {fileID: 0}
   prevSlot: {fileID: 0}
@@ -174,6 +175,7 @@ MonoBehaviour:
   maxHealth: 1000
   mana: 1000
   maxMana: 1000
+  iFrames: 0
   gravityScale: 1
   healthBar: {fileID: 0}
   healthBarColor: {fileID: 0}
@@ -186,7 +188,10 @@ MonoBehaviour:
   - {fileID: 1710948633399153014, guid: a299fe5bfb6836744a8c830cc98aaaca, type: 3}
   - {fileID: 5250063521951039479, guid: dfe6111fd256ce94c8cc80a0a073982d, type: 3}
   - {fileID: 8252006164800968402}
+  - {fileID: 8527865278803182314, guid: 7a3a893c3671ed048b5de28b14123bcc, type: 3}
   - {fileID: 2674923463244058676, guid: 5d819e723c2b9d2498725b10ed5756fb, type: 3}
+  - {fileID: 1657769947750907373, guid: afceffa558b4ee140b26b2a1b6b92a26, type: 3}
+  deathScreen: {fileID: 0}
 --- !u!114 &7544825122711863818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,7 +395,7 @@ Transform:
   m_GameObject: {fileID: 4766254663127881218}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0000534, y: -1.0556927, z: -0.8275769}
+  m_LocalPosition: {x: 0, y: 0.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -514,6 +519,7 @@ MonoBehaviour:
   player: {fileID: 9096015630183551818}
   xSen: 400
   ySen: 400
+  sensSlider: {fileID: 0}
 --- !u!1 &8252006164800968402
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,7 +569,9 @@ MonoBehaviour:
   manaCost: 300
   damage: 50
   speed: 0
+  element: 3
   windMult: 20
+  hitbox: {fileID: 0}
 --- !u!135 &2060126675442861742
 SphereCollider:
   m_ObjectHideFlags: 0

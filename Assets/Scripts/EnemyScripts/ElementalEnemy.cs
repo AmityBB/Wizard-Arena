@@ -32,7 +32,7 @@ public class ElementalEnemy : Enemy
     {
         if (element == rndnr)
         {
-            Debug.Log("immune");
+            //instatiate null particle
         }
         else
         {

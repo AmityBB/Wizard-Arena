@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 {
     public float score;
     public int currentWave;
+    public int waveFromBoss;
     private float timer;
     [SerializeField]
     private bool started = false;
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI waveTimerTxt;
     public List<BoxCollider> spawnAreas;
     public List<GameObject> enemies;
+    public List<GameObject> Bosses;
     public List<GameObject> LiveEnemies;
     private Coroutine m_coroutine = null;
     private Player player;
@@ -44,7 +46,22 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        Time.timeScale = 1;
         StopAllCoroutines();
+        if (LiveEnemies != null)
+        {
+            foreach (GameObject obj in LiveEnemies)
+            {
+                if (obj.GetComponent<Enemy>() != null)
+                {
+                    obj.GetComponent<Enemy>().Die();
+                }
+                else
+                {
+                    obj.GetComponentInChildren<Enemy>().Die();
+                }
+            }
+        }
         timer = 0;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -58,21 +75,8 @@ public class GameManager : MonoBehaviour
         player.mana = 1000;
         player.transform.position = new Vector3(0,1,0);
         player.transform.rotation = Quaternion.Euler(0, 0, 0);
-        if(LiveEnemies != null)
-        {
-            foreach(GameObject obj in LiveEnemies)
-            {
-                if (obj.GetComponent<Enemy>() != null)
-                {
-                    obj.GetComponent<Enemy>().Die();
-                }
-                else
-                {
-                    obj.GetComponentInChildren<Enemy>().Die();
-                }
-            }
-        }
         score = 0;
+        waveFromBoss = 0;
         currentWave = 1;
         StartWave(currentWave);
     }
@@ -92,6 +96,7 @@ public class GameManager : MonoBehaviour
                 if (enemy == null)
                 {
                     LiveEnemies.Remove(enemy);
+                    break;
                 }
             }
         }
@@ -109,18 +114,31 @@ public class GameManager : MonoBehaviour
 
     public void StartWave(int wave)
     {
-        foreach (BoxCollider box in spawnAreas)
+        waveFromBoss++;
+        if (waveFromBoss == 10)
         {
-            for (int i = 0; i < wave; i++)
+            LiveEnemies.Add(Instantiate(Bosses[Random.Range(0, Bosses.Count)], spawnAreas[0].transform.position, Quaternion.identity));
+            StopAllCoroutines();
+            m_coroutine = StartCoroutine(WaveTimer());
+            timer = 60;
+            waveFromBoss = 0;
+            started = true;
+        }
+        else
+        {
+            foreach (BoxCollider box in spawnAreas)
             {
-                Vector3 position = RandomPosInBox(box.bounds);
-                LiveEnemies.Add(Instantiate(enemies[Random.Range(0, enemies.Count)], position, Quaternion.identity));
-                if(i == wave -1)
+                for (int i = 0; i < wave; i++)
                 {
-                    StopAllCoroutines();
-                    m_coroutine = StartCoroutine(WaveTimer());
-                    timer = 60;
-                    started = true;
+                    Vector3 position = RandomPosInBox(box.bounds);
+                    LiveEnemies.Add(Instantiate(enemies[Random.Range(0, enemies.Count)], position, Quaternion.identity));
+                    if (i == wave - 1)
+                    {
+                        StopAllCoroutines();
+                        m_coroutine = StartCoroutine(WaveTimer());
+                        timer = 60;
+                        started = true;
+                    }
                 }
             }
         }

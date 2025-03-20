@@ -14,7 +14,7 @@ public class IceShard : Spell
         Destroy(gameObject, 20f);
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer != 6)
         {
