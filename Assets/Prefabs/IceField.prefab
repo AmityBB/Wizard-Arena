@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39e43537ce537024799cbd59fb84569c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slowdownMult: 2
+  slowdownMult: 2.5
   colliding: []
   duration: 7.5
+  element: 0

@@ -16,6 +16,7 @@ public class RockSpike : Spell
         RaycastHit hit;
         if (Physics.Raycast(player.transform.position, player.cam.transform.TransformDirection(Vector3.forward), out hit, 100f, mask))
         {
+            Debug.DrawRay(player.transform.position, player.cam.transform.TransformDirection(Vector3.forward), Color.red, Mathf.Infinity);
             if (hit.collider != null)
             {
                 if (hit.collider.gameObject.layer == 9)

@@ -100,8 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd4c76a9a98987d42a5422d7c9338eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
+  damage: 2.5
   duration: 7.5
+  element: 0
 --- !u!64 &2821417904366526315
 MeshCollider:
   m_ObjectHideFlags: 0

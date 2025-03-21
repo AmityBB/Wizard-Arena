@@ -32,7 +32,7 @@ public class RatKing : MonoBehaviour
         }
         else
         {
-            GetComponent<Enemy>().speed = 4.5f;
+            GetComponent<Enemy>().speed = 5;
         }
     }
     private IEnumerator SpawnRats()
