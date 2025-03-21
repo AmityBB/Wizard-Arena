@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 6000
-  speed: 5
+  speed: 6
   damage: 200
   range: 7
   deathScore: 100
@@ -308,6 +308,7 @@ MonoBehaviour:
   - {fileID: 3562893874122796195}
   rats: []
   player: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!1 &3120646738799562338
 GameObject:
   m_ObjectHideFlags: 0

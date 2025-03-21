@@ -8,8 +8,6 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     private Vector2 moveDir;
-    public float speed;
-    public float jumpForce;
     public bool grounded;
     private bool regeningHP;
     private bool regeningMana;
@@ -17,33 +15,35 @@ public class Player : MonoBehaviour
     public bool isDead;
     private bool CastingActive;
     [SerializeField] int selectedSpell;
-    public GameObject selectedSlot;
-    public GameObject prevSlot;
-    public GameObject nextSlot;
     public List<Texture> spellSprites;
 
 
+    public float speed;
+    public float jumpForce;
     public float health;
     public float maxHealth;
     public float mana;
     public float maxMana;
     [SerializeField] private float iFrames;
+    [SerializeField] private float gravityScale;
 
-    [SerializeField]
-    private float gravityScale;
 
     public GameObject healthBar;
     public GameObject healthBarColor;
-    public TextMeshProUGUI healthTxt;
     public GameObject manaBar;
+    public GameObject deathScreen;
+    public GameObject selectedSlot;
+    public GameObject prevSlot;
+    public GameObject nextSlot;
+    public List<GameObject> spells;
+    public List<GameObject> zombieSpawns;
+    public TextMeshProUGUI healthTxt;
     public TextMeshProUGUI manaTxt;
     private Coroutine HPRegen;
     private Coroutine MRegen;
     public Rigidbody rb;
     public Camera cam;
-    public List<GameObject> spells;
     private GameManager gameManager;
-    public GameObject deathScreen;
 
 
     private void Start()
@@ -105,19 +105,9 @@ public class Player : MonoBehaviour
                     }
                     break;
                 case 2:
-                    if (!grounded)
+                    if (mana >= spells[2].GetComponent<Spell>().manaCost && !CastingActive)
                     {
-                        if (mana >= spells[2].GetComponent<Spell>().manaCost && !CastingActive)
-                        {
-                            spells[2].GetComponent<WindSpell>().Cast();
-                        }
-                    }
-                    else
-                    {
-                        if (mana >= spells[2].GetComponent<Spell>().manaCost + 200 && !CastingActive)
-                        {
-                            spells[2].GetComponent<WindSpell>().Cast();
-                        }
+                        spells[2].GetComponent<WindSpell>().Cast();
                     }
                     break;
                 case 3:
@@ -141,7 +131,14 @@ public class Player : MonoBehaviour
                     }
                     break;
                 case 6:
-                    Debug.Log("Zombiesummon");
+                    if (mana >= spells[6].GetComponent<Spell>().manaCost && !CastingActive)
+                    {
+                        mana -= spells[6].GetComponent<Spell>().manaCost;
+                        for(int i = 0; i < zombieSpawns.Count; i++)
+                        {
+                            Instantiate(spells[6], new Vector3(zombieSpawns[i].transform.position.x, 0.5f, zombieSpawns[i].transform.position.z), gameObject.transform.rotation);
+                        }
+                    }
                     break;
                 
             }

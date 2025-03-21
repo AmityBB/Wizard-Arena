@@ -5864,26 +5864,6 @@ PrefabInstance:
       propertyPath: sensSlider
       value: 
       objectReference: {fileID: 1549367826}
-    - target: {fileID: 2650170270956193167, guid: db8d8f55d434fbc43a0e68afdd5c15de, type: 3}
-      propertyPath: m_Constraints
-      value: 112
-      objectReference: {fileID: 0}
-    - target: {fileID: 3218033052184969807, guid: db8d8f55d434fbc43a0e68afdd5c15de, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3218033052184969807, guid: db8d8f55d434fbc43a0e68afdd5c15de, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 3218033052184969807, guid: db8d8f55d434fbc43a0e68afdd5c15de, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4112955954360535888, guid: db8d8f55d434fbc43a0e68afdd5c15de, type: 3}
-      propertyPath: element
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 9096015630183551818, guid: db8d8f55d434fbc43a0e68afdd5c15de, type: 3}
       propertyPath: manaBar
       value: 
@@ -5920,22 +5900,6 @@ PrefabInstance:
       propertyPath: healthBarColor
       value: 
       objectReference: {fileID: 634485361}
-    - target: {fileID: 9096015630183551818, guid: db8d8f55d434fbc43a0e68afdd5c15de, type: 3}
-      propertyPath: spells.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 9096015630183551818, guid: db8d8f55d434fbc43a0e68afdd5c15de, type: 3}
-      propertyPath: 'spells.Array.data[3]'
-      value: 
-      objectReference: {fileID: 8527865278803182314, guid: 7a3a893c3671ed048b5de28b14123bcc, type: 3}
-    - target: {fileID: 9096015630183551818, guid: db8d8f55d434fbc43a0e68afdd5c15de, type: 3}
-      propertyPath: 'spells.Array.data[4]'
-      value: 
-      objectReference: {fileID: 2674923463244058676, guid: 5d819e723c2b9d2498725b10ed5756fb, type: 3}
-    - target: {fileID: 9096015630183551818, guid: db8d8f55d434fbc43a0e68afdd5c15de, type: 3}
-      propertyPath: 'spells.Array.data[5]'
-      value: 
-      objectReference: {fileID: 1657769947750907373, guid: afceffa558b4ee140b26b2a1b6b92a26, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

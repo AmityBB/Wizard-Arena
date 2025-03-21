@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 250
-  speed: 6
+  speed: 7
   damage: 120
   range: 5.15
   deathScore: 7

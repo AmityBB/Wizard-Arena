@@ -12,7 +12,8 @@ public class Spell : MonoBehaviour
         Ice,
         Rock,
         Wind,
-        Electric
+        Electric,
+        Null
     }
     public Elements element = Elements.Fire;
     
