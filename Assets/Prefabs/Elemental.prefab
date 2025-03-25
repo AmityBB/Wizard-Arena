@@ -141,6 +141,9 @@ MonoBehaviour:
   lightning: {fileID: 2674923463244058676, guid: f1f19ce47edf917499a1839962d1b209, type: 3}
   defaultTexture: {fileID: 0}
   hurtTexture: {fileID: 2100000, guid: 336830e505cbf344fb4c0dc9757d91a8, type: 2}
+  colorchanging:
+  - {fileID: 9120771997659905322}
+  baseColors: []
   textures:
   - {fileID: 2100000, guid: 0aafb1aa5c63dc641b4d408862636221, type: 2}
   - {fileID: 2100000, guid: a69c4c0d3ef892040ad7559f0aa31e12, type: 2}

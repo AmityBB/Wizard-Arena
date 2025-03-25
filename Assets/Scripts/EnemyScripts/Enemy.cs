@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,6 +25,8 @@ public class Enemy : MonoBehaviour
     public GameObject lightning;
     public Material defaultTexture;
     public Material hurtTexture;
+    public List<GameObject> colorchanging;
+    public List<Material> baseColors;
     private Coroutine attackCoroutine;
 
     public virtual void Start()
@@ -36,6 +39,10 @@ public class Enemy : MonoBehaviour
             health += (health * 0.01f) * (gameManager.currentWave - 1);
             damage += (damage * 0.01f) * (gameManager.currentWave - 1);
             deathScore += (deathScore * 0.05f) * (gameManager.currentWave - 1);
+        }
+        for(int i = 0; i < colorchanging.Count; i++)
+        {
+            baseColors.Add(colorchanging[i].GetComponent<Renderer>().material);
         }
     }
 
@@ -116,16 +123,19 @@ public class Enemy : MonoBehaviour
     public virtual void TakeDamage(float dmg, int element)
     {
         health -= dmg;
-        gameObject.GetComponent<Renderer>().material = hurtTexture;
-        StartCoroutine(TextureSet());
+        for(int i = 0; i < colorchanging.Count; i++)
+        {
+            colorchanging[i].GetComponent<Renderer>().material = hurtTexture;
+            StartCoroutine(TextureSet(baseColors[i], colorchanging[i]));
+        }
         if (health <= 0)
         {
             Die();
         }
     }
-    IEnumerator TextureSet()
+    IEnumerator TextureSet(Material color, GameObject part)
     {
         yield return new WaitForSeconds(0.5f);
-        gameObject.GetComponent<Renderer>().material = defaultTexture;
+        part.GetComponent<Renderer>().material = color;
     }
 }

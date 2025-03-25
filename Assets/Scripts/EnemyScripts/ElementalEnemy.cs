@@ -16,12 +16,12 @@ public class ElementalEnemy : Enemy
     public Elements element = Elements.Fire;
     public override void Start()
     {
-        base.Start();
         rndnr = UnityEngine.Random.Range(0, 5);
         if(rndnr > 4 ) rndnr = 4;
         if(rndnr < 0 ) rndnr = 0;
         element = (Elements)rndnr;
         defaultTexture = GetComponent<MeshRenderer>().material = textures[rndnr];
+        base.Start();
     }
     public override void Update()
     {
