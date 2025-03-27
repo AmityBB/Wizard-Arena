@@ -20,7 +20,10 @@ public class ElementalEnemy : Enemy
         if(rndnr > 4 ) rndnr = 4;
         if(rndnr < 0 ) rndnr = 0;
         element = (Elements)rndnr;
-        defaultTexture = GetComponent<MeshRenderer>().material = textures[rndnr];
+        for (int i = 0;  i < colorchanging.Count; i++)
+        {
+            colorchanging[i].GetComponent<MeshRenderer>().material = textures[rndnr];
+        }
         base.Start();
     }
     public override void Update()
