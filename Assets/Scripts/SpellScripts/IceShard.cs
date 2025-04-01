@@ -5,11 +5,15 @@ public class IceShard : Spell
     [SerializeField] private GameObject IceField;
     private bool fieldSpawned;
     private Rigidbody rb;
+    public override void Awake()
+    {
+        base.Awake();
+        rb = GetComponent<Rigidbody>();
+    }
     public override void Start()
     {
         base.Start();
         fieldSpawned = false;
-        rb = GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * speed, ForceMode.Impulse);
         Destroy(gameObject, 20f);
     }

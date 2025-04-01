@@ -17,10 +17,12 @@ public class Spell : MonoBehaviour
     }
     public Elements element = Elements.Fire;
     
-
-    public virtual void Start()
+    public virtual void Awake()
     {
         player = FindFirstObjectByType<Player>();
+    }
+    public virtual void Start()
+    {
         ConsumeMana();
     }
     public void ConsumeMana()

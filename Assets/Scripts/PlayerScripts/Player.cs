@@ -44,11 +44,11 @@ public class Player : MonoBehaviour
     public Rigidbody rb;
     public Camera cam;
     private GameManager gameManager;
+    private Vector3 maxSpeed;
 
-
-    private void Start()
+    private void Awake()
     {
-        cam = FindFirstObjectByType<Camera>();
+        cam = FindObjectOfType<Camera>();
         rb = GetComponent<Rigidbody>();
         gameManager = FindFirstObjectByType<GameManager>();
     }
@@ -230,7 +230,8 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         rb.AddForce(Physics.gravity * (gravityScale - 1) * rb.mass);
-        transform.Translate(new Vector3(moveDir.x, 0, moveDir.y) * speed);
+        Vector3 direction = transform.right * moveDir.x + transform.forward * moveDir.y;
+        rb.AddForce(direction * speed);
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -2,7 +2,6 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -29,11 +28,14 @@ public class Enemy : MonoBehaviour
     public List<Material> baseColors;
     private Coroutine attackCoroutine;
 
-    public virtual void Start()
+    public virtual void Awake()
     {
         gameManager = FindFirstObjectByType<GameManager>();
         player = FindFirstObjectByType<Player>();
         m_agent = navObject.GetComponent<NavMeshAgent>();
+    }
+    public virtual void Start()
+    {
         if (gameManager.currentWave > 1)
         {
             health += (health * 0.01f) * (gameManager.currentWave - 1);

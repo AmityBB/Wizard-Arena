@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 public class Buttons : MonoBehaviour
 {
     private GameManager gameManager;
+    [SerializeField]private Canvas menu;
+    [SerializeField]private Canvas controls;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -35,5 +37,17 @@ public class Buttons : MonoBehaviour
     public void Quitgame()
     {
         Application.Quit();
+    }
+
+    public void ContolScreen()
+    {
+        controls.enabled = true;
+        menu.enabled = false;
+    }
+
+    public void MenuScreen()
+    {
+        controls.enabled = false;
+        menu.enabled = true;
     }
 }

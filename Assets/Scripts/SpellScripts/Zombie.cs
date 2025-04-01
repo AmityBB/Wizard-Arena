@@ -13,12 +13,15 @@ public class Zombie : Spell
     [SerializeField] private bool isAttacking;
     [SerializeField] private float atkRange;
     [SerializeField] private float health;
-    public override void Start()
+    private void Awake()
     {
-        distance = Mathf.Infinity;
         gameManager = FindFirstObjectByType<GameManager>();
         player = FindFirstObjectByType<Player>();
         m_agent = gameObject.GetComponent<NavMeshAgent>();
+    }
+    public override void Start()
+    {
+        distance = Mathf.Infinity;
         Destroy(gameObject, 60f);
     }
     private void Update()

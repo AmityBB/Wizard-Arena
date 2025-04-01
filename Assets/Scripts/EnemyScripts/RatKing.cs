@@ -10,10 +10,14 @@ public class RatKing : MonoBehaviour
     [SerializeField] private List<GameObject> rats;
     [SerializeField] private Player player;
     [SerializeField] private GameManager gameManager;
+
+    private void Awake()
+    {
+        player = FindFirstObjectByType<Player>();
+        gameManager = FindFirstObjectByType<GameManager>();
+    }
     private void Start()
     {
-        player = FindObjectOfType<Player>();
-        gameManager = FindObjectOfType<GameManager>();
         StartCoroutine(SpawnRats());
     }
     private void Update()

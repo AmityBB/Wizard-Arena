@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> Bosses;
     public List<GameObject> LiveEnemies;
     private Coroutine m_coroutine = null;
+    [SerializeField]
     private Player player;
     public GameObject pauseScreen;
 
@@ -34,13 +35,10 @@ public class GameManager : MonoBehaviour
             Random.Range(bounds.min.z, bounds.max.z)
             );
     }
-
     void Start()
     {
+        started = false;
         player = FindFirstObjectByType<Player>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        locked = true;
         StartGame();
     }
 
@@ -65,15 +63,15 @@ public class GameManager : MonoBehaviour
         timer = 0;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        player.GetComponent<Player>().enabled = true;
+        locked = true;
+        player.enabled = true;
         player.cam.GetComponent<PlayerCamera>().enabled = true;
         player.deathScreen.GetComponent<Canvas>().enabled = false;
         player.isDead = false;
         player.poisoned = false;
-        started = false;
         player.health = 1000;
         player.mana = 1000;
-        player.transform.position = new Vector3(0,1,0);
+        player.transform.position = new Vector3(0, 1, 0);
         player.transform.rotation = Quaternion.Euler(0, 0, 0);
         score = 0;
         waveFromBoss = 0;
@@ -119,7 +117,7 @@ public class GameManager : MonoBehaviour
         {
             LiveEnemies.Add(Instantiate(Bosses[Random.Range(0, Bosses.Count)], spawnAreas[0].transform.position, Quaternion.identity));
             StopAllCoroutines();
-            m_coroutine = StartCoroutine(WaveTimer());
+            m_coroutine = StartCoroutine(WaveTimer(60));
             timer = 60;
             waveFromBoss = 0;
             started = true;
@@ -135,7 +133,7 @@ public class GameManager : MonoBehaviour
                     if (i == wave - 1)
                     {
                         StopAllCoroutines();
-                        m_coroutine = StartCoroutine(WaveTimer());
+                        m_coroutine = StartCoroutine(WaveTimer(60));
                         timer = 60;
                         started = true;
                     }
@@ -143,9 +141,9 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    private IEnumerator WaveTimer()
+    private IEnumerator WaveTimer(int time)
     {
-        yield return new WaitForSeconds(60f);
+        yield return new WaitForSeconds(time);
         currentWave++;
         StartWave(currentWave);
     }
