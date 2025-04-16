@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Scores
   m_EditorClassIdentifier: 
   scoreList:
-  - 110.1
-  - 90
-  - 52
-  - 20
-  - 10
-  - 10
-  - 10
-  - 10
-  - 10
-  - 10
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
