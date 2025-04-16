@@ -6,10 +6,11 @@ public class Buttons : MonoBehaviour
     private GameManager gameManager;
     [SerializeField]private Canvas menu;
     [SerializeField]private Canvas controls;
+    [SerializeField]private Canvas score;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(FindFirstObjectByType<GameManager>() != null)
+        if (FindFirstObjectByType<GameManager>() != null)
         {
             gameManager = FindFirstObjectByType<GameManager>();
         }
@@ -21,6 +22,7 @@ public class Buttons : MonoBehaviour
     }
     public void ToMenu()
     {
+        gameManager.EndGame();
         SceneManager.LoadScene(0);
     }
     public void ToGame()
@@ -32,6 +34,7 @@ public class Buttons : MonoBehaviour
     }
     public void RestartGame()
     {
+        gameManager.EndGame();
         gameManager.StartGame();
     }
     public void Quitgame()
@@ -47,7 +50,13 @@ public class Buttons : MonoBehaviour
 
     public void MenuScreen()
     {
-        controls.enabled = false;
+        GetComponentInParent<Canvas>().enabled = false;
         menu.enabled = true;
+    }
+
+    public void ScoreBoard()
+    {
+        score.enabled = true;
+        menu.enabled = false;
     }
 }

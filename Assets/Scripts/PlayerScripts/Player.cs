@@ -261,7 +261,7 @@ public class Player : MonoBehaviour
         if (iFrames <= 0 || poisoned)
         {
             health -= dmg;
-            iFrames = 100;
+            iFrames = 50;
         }
     }
 

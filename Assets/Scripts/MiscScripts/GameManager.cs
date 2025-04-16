@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public int waveFromBoss;
     private float timer;
     [SerializeField]
-    private bool started = false;
+    public bool started = false;
     public bool locked;
 
     public TextMeshProUGUI scoreTxt;
@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Player player;
     public GameObject pauseScreen;
+    private ScoreManager scoreManager;
 
     public static Vector3 RandomPosInBox(Bounds bounds)
     {
@@ -37,8 +38,9 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        started = false;
+        scoreManager = FindFirstObjectByType<ScoreManager>();
         player = FindFirstObjectByType<Player>();
+        started = false;
         StartGame();
     }
 
@@ -168,5 +170,10 @@ public class GameManager : MonoBehaviour
             player.cam.GetComponent<PlayerCamera>().enabled = true;
             pauseScreen.GetComponent<Canvas>().enabled = false;
         }
+    }
+
+    public void EndGame()
+    {
+        scoreManager.SetScore(score);
     }
 }
